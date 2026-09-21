@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BACKEND_ENGINEER.ROADMAP — Full Stack Systems Path</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0d12;
+    --bg-alt:#0d1117;
+    --panel:#11161e;
+    --panel-hi:#151b25;
+    --border:#212b38;
+    --border-soft:#1a222d;
+    --grid-line:rgba(92,207,230,0.05);
+    --text:#e7ecf3;
+    --text-dim:#8a97a8;
+    --text-faint:#526073;
+    --amber:#ffb454;
+    --amber-dim:rgba(255,180,84,0.15);
+    --cyan:#5ccfe6;
+    --cyan-dim:rgba(92,207,230,0.12);
+    --green:#7fd88f;
+    --red:#f07178;
+    --mono:'JetBrains Mono', ui-monospace, monospace;
+    --sans:'IBM Plex Sans', system-ui, sans-serif;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:
+      linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0/44px 44px,
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0/44px 44px,
+      var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+
+  ::selection{background:var(--amber-dim); color:var(--amber);}
+
+  a{color:inherit;}
+
+  ::-webkit-scrollbar{width:10px;}
+  ::-webkit-scrollbar-track{background:var(--bg);}
+  ::-webkit-scrollbar-thumb{background:var(--border); border-radius:6px;}
+  ::-webkit-scrollbar-thumb:hover{background:var(--text-faint);}
+
+  /* ============ TOPBAR ============ */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 28px;
+    background:rgba(10,13,18,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border-soft);
+  }
+  .topbar .brand{
+    font-family:var(--mono); font-weight:700; font-size:13px;
+    letter-spacing:0.08em; color:var(--text);
+    display:flex; align-items:center; gap:10px;
+  }
+  .brand .dot{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 8px var(--green);
+    animation:blink 2.4s ease-in-out infinite;
+  }
+  @keyframes blink{0%,100%{opacity:1;} 50%{opacity:0.35;}}
+  .topbar .meta{
+    font-family:var(--mono); font-size:11px; color:var(--text-faint);
+    display:flex; gap:18px;
+  }
+  .topbar .meta span b{color:var(--cyan); font-weight:600;}
+  @media (max-width:760px){ .topbar .meta{display:none;} }
+
+  /* ============ HERO ============ */
+  .hero{
+    max-width:1180px; margin:0 auto;
+    padding:88px 32px 64px;
+    position:relative;
+  }
+  .hero .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.22em;
+    color:var(--cyan); text-transform:uppercase;
+    display:flex; align-items:center; gap:12px; margin-bottom:22px;
+  }
+  .hero .eyebrow::before{
+    content:''; width:26px; height:1px; background:var(--cyan);
+  }
+  .hero h1{
+    font-family:var(--mono); font-weight:800;
+    font-size:clamp(32px, 5.4vw, 62px);
+    line-height:1.06; letter-spacing:-0.01em;
+    color:var(--text);
+  }
+  .hero h1 .accent{color:var(--amber);}
+  .hero p.lede{
+    max-width:640px; margin-top:22px;
+    font-size:16.5px; color:var(--text-dim);
+  }
+  .hero .stats{
+    display:flex; flex-wrap:wrap; gap:0;
+    margin-top:44px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    background:var(--panel);
+  }
+  .hero .stat{
+    flex:1 1 140px;
+    padding:18px 22px;
+    border-right:1px solid var(--border);
+  }
+  .hero .stat:last-child{border-right:none;}
+  .hero .stat .num{
+    font-family:var(--mono); font-weight:700; font-size:26px; color:var(--amber);
+  }
+  .hero .stat .lbl{
+    font-size:11.5px; color:var(--text-faint); margin-top:4px;
+    text-transform:uppercase; letter-spacing:0.06em;
+  }
+
+  /* ============ LEGEND ============ */
+  .legend-wrap{max-width:1180px; margin:0 auto; padding:0 32px 20px;}
+  .legend{
+    display:flex; flex-wrap:wrap; gap:22px;
+    padding:16px 20px;
+    border:1px dashed var(--border);
+    border-radius:10px;
+    font-family:var(--mono); font-size:12px; color:var(--text-dim);
+  }
+  .legend .item{display:flex; align-items:center; gap:8px;}
+  .meter{display:inline-flex; gap:2px;}
+  .meter i{width:6px; height:12px; border-radius:1px; background:var(--border);}
+  .meter.p5 i:nth-child(-n+5){background:var(--red);}
+  .meter.p4 i:nth-child(-n+4){background:var(--amber);}
+  .meter.p3 i:nth-child(-n+3){background:var(--cyan);}
+
+  /* ============ MAIN LAYOUT ============ */
+  .layout{
+    max-width:1180px; margin:0 auto;
+    display:grid; grid-template-columns:64px 1fr;
+    gap:0 28px;
+    padding:20px 32px 40px;
+    position:relative;
+  }
+  @media (max-width:900px){
+    .layout{grid-template-columns:40px 1fr; padding:20px 18px 40px;}
+  }
+
+  /* rail with the animated trace */
+  .rail{
+    position:relative;
+    grid-column:1;
+  }
+  .rail::before{
+    content:'';
+    position:absolute; left:50%; top:0; bottom:0;
+    width:2px; transform:translateX(-50%);
+    background:linear-gradient(var(--border), var(--border));
+  }
+  .rail .pulse{
+    position:absolute; left:50%; width:8px; height:8px;
+    transform:translateX(-50%);
+    border-radius:50%; background:var(--cyan);
+    box-shadow:0 0 12px 2px var(--cyan);
+    animation:travel 7s linear infinite;
+  }
+  @keyframes travel{
+    0%{top:0%; opacity:0;}
+    5%{opacity:1;}
+    95%{opacity:1;}
+    100%{top:100%; opacity:0;}
+  }
+
+  /* ============ SIDE NAV (desktop quickjump) ============ */
+  .quicknav{
+    position:fixed; right:22px; top:50%; transform:translateY(-50%);
+    display:flex; flex-direction:column; gap:5px;
+    z-index:40;
+  }
+  .quicknav a{
+    width:9px; height:9px; border-radius:50%;
+    background:var(--border);
+    border:1px solid var(--border-soft);
+    transition:all .2s ease;
+    position:relative;
+  }
+  .quicknav a:hover, .quicknav a.active{
+    background:var(--amber);
+    box-shadow:0 0 8px var(--amber);
+    transform:scale(1.3);
+  }
+  .quicknav a .tip{
+    position:absolute; right:18px; top:50%; transform:translateY(-50%);
+    white-space:nowrap; font-family:var(--mono); font-size:10.5px;
+    background:var(--panel-hi); border:1px solid var(--border);
+    padding:3px 8px; border-radius:5px; color:var(--text-dim);
+    opacity:0; pointer-events:none; transition:opacity .15s ease;
+  }
+  .quicknav a:hover .tip{opacity:1;}
+  @media (max-width:1200px){ .quicknav{display:none;} }
+
+  /* ============ PHASE (module) ============ */
+  .phase{
+    grid-column:2;
+    margin-bottom:34px;
+    scroll-margin-top:90px;
+  }
+  .phase .node{
+    position:relative;
+  }
+  .phase .addr-wrap{
+    position:absolute; left:calc(-28px - 32px); top:2px;
+    width:64px; text-align:center;
+    grid-column:1;
+  }
+  .addr{
+    display:inline-block;
+    font-family:var(--mono); font-size:11px; font-weight:700;
+    color:var(--bg);
+    background:var(--cyan);
+    padding:4px 0; width:56px; border-radius:5px;
+    box-shadow:0 0 0 4px var(--bg), 0 0 14px rgba(92,207,230,0.35);
+    position:relative; left:-32px;
+  }
+  @media (max-width:900px){
+    .phase .addr-wrap{left:calc(-20px - 20px); width:40px;}
+    .addr{width:38px; font-size:9px; left:-20px;}
+  }
+
+  .card{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:26px 28px;
+    transition:border-color .2s ease;
+  }
+  .card:hover{border-color:var(--border-faint,#2a3644);}
+
+  .phase-head{
+    display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between;
+    gap:10px; margin-bottom:6px;
+  }
+  .phase-title{
+    font-family:var(--mono); font-weight:700; font-size:18.5px; color:var(--text);
+  }
+  .phase-title .tag{
+    font-family:var(--mono); font-size:10.5px; color:var(--text-faint);
+    text-transform:uppercase; letter-spacing:0.08em; margin-left:10px;
+  }
+  .phase-priority{display:flex; align-items:center; gap:8px;}
+  .phase-priority .plabel{
+    font-family:var(--mono); font-size:10px; color:var(--text-faint);
+    text-transform:uppercase; letter-spacing:0.08em;
+  }
+
+  .phase-why{
+    color:var(--text-dim); font-size:14.5px; margin:10px 0 20px;
+    border-left:2px solid var(--border);
+    padding-left:14px;
+  }
+
+  .tools{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr));
+    gap:14px;
+  }
+  .tool{
+    background:var(--bg-alt);
+    border:1px solid var(--border-soft);
+    border-radius:9px;
+    padding:14px 16px;
+  }
+  .tool .tname{
+    font-family:var(--mono); font-weight:600; font-size:13.5px; color:var(--cyan);
+    margin-bottom:6px; display:block;
+  }
+  .tool .tuse{
+    font-size:13px; color:var(--text-dim); line-height:1.5;
+  }
+
+  .note{
+    margin-top:16px;
+    font-size:13px; color:var(--text-faint);
+    background:var(--cyan-dim);
+    border:1px solid rgba(92,207,230,0.18);
+    border-radius:8px;
+    padding:10px 14px;
+  }
+  .note b{color:var(--cyan); font-weight:600;}
+
+  .gapflag{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:var(--mono); font-size:10px; letter-spacing:0.05em;
+    color:var(--amber); background:var(--amber-dim);
+    border:1px solid rgba(255,180,84,0.3);
+    padding:2px 8px; border-radius:20px; margin-left:8px;
+    text-transform:uppercase; vertical-align:middle;
+  }
+
+  /* ============ SECTION DIVIDER (tier headers) ============ */
+  .tier-divider{
+    grid-column:1 / -1;
+    display:flex; align-items:center; gap:16px;
+    margin:52px 0 22px;
+  }
+  .tier-divider .line{flex:1; height:1px; background:var(--border);}
+  .tier-divider .label{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.14em;
+    color:var(--amber); text-transform:uppercase;
+    display:flex; align-items:center; gap:10px;
+    white-space:nowrap;
+  }
+  .tier-divider .label .n{
+    font-size:10px; color:var(--text-faint); font-weight:400;
+  }
+
+  /* ============ FOOTER ============ */
+  footer{
+    max-width:1180px; margin:0 auto; padding:50px 32px 90px;
+    border-top:1px solid var(--border-soft);
+    margin-top:30px;
+  }
+  footer .foot-grid{
+    display:flex; flex-wrap:wrap; justify-content:space-between; gap:26px;
+  }
+  footer h4{
+    font-family:var(--mono); font-size:13px; color:var(--text); margin-bottom:10px;
+    letter-spacing:0.04em;
+  }
+  footer p{font-size:13px; color:var(--text-faint); max-width:420px;}
+  footer .sig{
+    font-family:var(--mono); font-size:11px; color:var(--text-faint);
+    margin-top:36px; padding-top:20px; border-top:1px solid var(--border-soft);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .rail .pulse{animation:none; display:none;}
+    .brand .dot{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="dot"></span> BACKEND_ROADMAP.SYS</div>
+  <div class="meta">
+    <span>NODES: <b>28</b></span>
+    <span>TOOLS: <b>130+</b></span>
+    <span>STATUS: <b>ZERO&nbsp;→&nbsp;PRODUCTION</b></span>
+  </div>
+</div>
+
+<div class="quicknav" id="quicknav"></div>
+
+<section class="hero">
+  <div class="eyebrow">Master Backend Engineering Path</div>
+  <h1>The complete<br><span class="accent">backend systems</span> map.</h1>
+  <p class="lede">Every layer a request passes through — from the language you write, down through the database, cache, queue, container, and cloud — mapped as one continuous signal path. Built from your stack, with every missing piece wired back in.</p>
+  <div class="stats">
+    <div class="stat"><div class="num">28</div><div class="lbl">Modules</div></div>
+    <div class="stat"><div class="num">7</div><div class="lbl">Learning tiers</div></div>
+    <div class="stat"><div class="num">130+</div><div class="lbl">Tools &amp; techs</div></div>
+    <div class="stat"><div class="num">9</div><div class="lbl">Gaps filled in</div></div>
+  </div>
+</section>
+
+<div class="legend-wrap">
+  <div class="legend">
+    <span class="item"><span class="meter p5"><i></i><i></i><i></i><i></i><i></i></span> Critical — non‑negotiable</span>
+    <span class="item"><span class="meter p4"><i></i><i></i><i></i><i></i><i></i></span> High — expected in most roles</span>
+    <span class="item"><span class="meter p3"><i></i><i></i><i></i><i></i><i></i></span> Situational — role/scale dependent</span>
+    <span class="item"><span class="gapflag" style="margin-left:0;">Added</span> not in the original list — filled in</span>
+  </div>
+</div>
+
+<div class="layout" id="layout">
+  <div class="rail"><div class="pulse"></div></div>
+
+  <!-- ============================================================ TIER 0 -->
+  <div class="tier-divider"><span class="label">Tier 00 <span class="n">— Foundations</span></span><span class="line"></span></div>
+
+  <div class="phase" id="p00">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x00</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">Computer Science Foundations <span class="tag">before any framework</span></div>
+          <div class="phase-priority"><span class="meter p5"><i></i><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">Frameworks change every few years; how a computer actually runs your code does not. This tier is why senior engineers debug faster — they reason from first principles instead of guessing.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">Data Structures &amp; Algorithms <span class="gapflag">Added</span></span><span class="tuse">Arrays, hash maps, trees, graphs, heaps, sorting/searching. Every index, cache eviction policy, and query planner is DSA wearing a different costume.</span></div>
+          <div class="tool"><span class="tname">Operating Systems &amp; Linux <span class="gapflag">Added</span></span><span class="tuse">Processes vs threads, memory paging, file descriptors, signals, the shell. Explains why your service gets OOM-killed or hangs on too many open connections.</span></div>
+          <div class="tool"><span class="tname">Networking Fundamentals <span class="gapflag">Added</span></span><span class="tuse">TCP/IP, DNS resolution, HTTP/HTTPS, TLS handshakes, ports. An API is a networking contract before it's a code contract.</span></div>
+          <div class="tool"><span class="tname">Git &amp; GitHub/GitLab</span><span class="tuse">Branching, rebasing, merge conflicts, pull requests. The baseline literacy for working with any team, on any stack.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ TIER 1 -->
+  <div class="tier-divider"><span class="label">Tier 01 <span class="n">— Language &amp; Frameworks</span></span><span class="line"></span></div>
+
+  <div class="phase" id="p01">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x01</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">Core Programming Language</div>
+          <div class="phase-priority"><span class="meter p5"><i></i><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">Pick one and go deep before spreading across all three — depth here compounds into every layer above it.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">Python</span><span class="tuse">Fastest to write and read; dominant for APIs that lean on data/ML tooling.</span></div>
+          <div class="tool"><span class="tname">Java</span><span class="tuse">Enterprise standard — strong typing, mature JVM tooling, huge legacy footprint to hire into.</span></div>
+          <div class="tool"><span class="tname">JavaScript / TypeScript</span><span class="tuse">Same language on client and server; TypeScript adds the type safety Java developers expect.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase" id="p02">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x02</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">Backend Frameworks</div>
+          <div class="phase-priority"><span class="meter p5"><i></i><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">A framework is opinionated plumbing — routing, request lifecycle, dependency injection — so you stop rebuilding the same wiring for every project.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">Spring Boot</span><span class="tuse">Java's default for production services — DI container, auto-configuration, huge ecosystem of starters.</span></div>
+          <div class="tool"><span class="tname">FastAPI</span><span class="tuse">Python, async-native, generates OpenAPI docs automatically from type hints — the fastest way to ship a typed Python API.</span></div>
+          <div class="tool"><span class="tname">Django / DRF</span><span class="tuse">Batteries-included Python framework; DRF layers a serious REST toolkit on top for API-first projects.</span></div>
+          <div class="tool"><span class="tname">Node.js / NestJS</span><span class="tuse">NestJS brings Angular-style structure (modules, decorators, DI) to Node, which plain Express doesn't enforce.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ TIER 2 -->
+  <div class="tier-divider"><span class="label">Tier 02 <span class="n">— Communication Layer</span></span><span class="line"></span></div>
+
+  <div class="phase" id="p03">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x03</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">API Development</div>
+          <div class="phase-priority"><span class="meter p5"><i></i><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">This is the contract your frontend, mobile app, and other services all depend on — get the shape and semantics right and everything downstream is easier.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">REST API</span><span class="tuse">The default — resource-based, stateless, cache-friendly. Master this before reaching for anything else.</span></div>
+          <div class="tool"><span class="tname">GraphQL</span><span class="tuse">Lets clients request exactly the fields they need — solves over/under-fetching that plagues large REST responses.</span></div>
+          <div class="tool"><span class="tname">WebSockets</span><span class="tuse">Persistent, bidirectional connections for chat, live dashboards, and real-time notifications.</span></div>
+          <div class="tool"><span class="tname">gRPC</span><span class="tuse">Binary protocol over HTTP/2 for fast internal service-to-service calls — this is the microservices workhorse.</span></div>
+        </div>
+        <div class="note"><b>Gap filled — API Versioning &amp; Idempotency:</b> version your endpoints (<code>/v1/</code>) before you need to break a contract, and make write endpoints idempotent (idempotency keys) so retries never double-charge or double-create.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ TIER 3 -->
+  <div class="tier-divider"><span class="label">Tier 03 <span class="n">— Data Layer</span></span><span class="line"></span></div>
+
+  <div class="phase" id="p04">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x04</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">SQL Databases</div>
+          <div class="phase-priority"><span class="meter p5"><i></i><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">Where 80% of production incidents at scale actually live — not the framework, the query plan.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">PostgreSQL</span><span class="tuse">The default modern choice — strong consistency, JSONB for semi-structured data, excellent indexing options.</span></div>
+          <div class="tool"><span class="tname">MySQL</span><span class="tuse">Still ubiquitous in legacy and high-read web stacks; know it for interoperability.</span></div>
+        </div>
+        <div class="note"><b>Gap filled — Indexing &amp; Query Optimization:</b> B-tree vs composite indexes, <code>EXPLAIN ANALYZE</code>, N+1 query detection. This single skill fixes more "slow API" tickets than any code rewrite.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase" id="p05">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x05</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">NoSQL Databases</div>
+          <div class="phase-priority"><span class="meter p4"><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">Reach for these when your data doesn't fit neat rows, or when you need horizontal scale SQL wasn't built for.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">MongoDB</span><span class="tuse">Document store for flexible, nested schemas — good fit for catalogs, CMS-style content, evolving data shapes.</span></div>
+          <div class="tool"><span class="tname">DynamoDB</span><span class="tuse">AWS's managed key-value/document store — single-digit millisecond latency at near-infinite scale, no ops overhead.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase" id="p06">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x06</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">ORM &amp; Data Access</div>
+          <div class="phase-priority"><span class="meter p4"><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">An ORM trades a little SQL control for a lot of dev speed and type safety — know when to drop to raw SQL anyway.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">Hibernate / JPA</span><span class="tuse">The Java standard — entity mapping, lazy loading, and the classic N+1 pitfall to watch for.</span></div>
+          <div class="tool"><span class="tname">SQLAlchemy</span><span class="tuse">Python's most powerful ORM — supports both high-level ORM and low-level Core query building.</span></div>
+          <div class="tool"><span class="tname">Django ORM</span><span class="tuse">Tightly integrated with Django's models — fast to prototype, migrations built in.</span></div>
+          <div class="tool"><span class="tname">Prisma</span><span class="tuse">Type-safe query builder for Node/TypeScript with an auto-generated client from your schema.</span></div>
+        </div>
+        <div class="note"><b>Gap filled — Database Migrations:</b> Flyway, Liquibase (Java), Alembic (Python), or Prisma Migrate. Schema changes need version control exactly like code does — never hand-edit a production schema.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase" id="p07">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x07</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">Caching</div>
+          <div class="phase-priority"><span class="meter p5"><i></i><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">The single highest-leverage change for cutting latency and database load — usually the fastest path from "slow" to "fast."</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">Redis</span><span class="tuse">In-memory store for caching, sessions, rate-limit counters, and pub/sub — the default choice almost everywhere.</span></div>
+          <div class="tool"><span class="tname">Memcached <span class="gapflag">Added</span></span><span class="tuse">Simpler pure key-value cache — lighter than Redis when you don't need persistence or data structures.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ TIER 4 -->
+  <div class="tier-divider"><span class="label">Tier 04 <span class="n">— Security &amp; Access</span></span><span class="line"></span></div>
+
+  <div class="phase" id="p08">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x08</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">Authentication</div>
+          <div class="phase-priority"><span class="meter p5"><i></i><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">Getting "who is this request from" wrong is the root of most breaches — worth over-learning.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">JWT</span><span class="tuse">Stateless, signed tokens — fast to verify, but plan for revocation since you can't easily "unsign" one early.</span></div>
+          <div class="tool"><span class="tname">OAuth 2.0</span><span class="tuse">The standard for delegated access — "log in with Google" and third-party API access both run on this.</span></div>
+          <div class="tool"><span class="tname">OpenID Connect</span><span class="tuse">An identity layer built on top of OAuth 2.0 — answers "who is this user," not just "what can they access."</span></div>
+          <div class="tool"><span class="tname">Session Auth</span><span class="tuse">Server-stored session + cookie — simpler to revoke than JWT, still the right call for classic server-rendered apps.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase" id="p09">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x09</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">Application Security</div>
+          <div class="phase-priority"><span class="meter p5"><i></i><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">Non-negotiable — a fast, well-designed API that leaks user data isn't a shippable API.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">OWASP Top 10</span><span class="tuse">The industry checklist of the most common, most damaging vulnerability classes — treat it as required reading.</span></div>
+          <div class="tool"><span class="tname">CORS</span><span class="tuse">Controls which origins may call your API from a browser — misconfiguring this is the #1 "why is my frontend blocked" ticket.</span></div>
+          <div class="tool"><span class="tname">CSRF Protection</span><span class="tuse">Stops attackers from tricking a logged-in user's browser into firing unwanted requests on your API.</span></div>
+          <div class="tool"><span class="tname">SQL Injection Prevention</span><span class="tuse">Parameterized queries and ORMs by default — never string-concatenate user input into SQL.</span></div>
+          <div class="tool"><span class="tname">XSS Prevention</span><span class="tuse">Escape/sanitize anything rendered back to a browser that originated from user input.</span></div>
+          <div class="tool"><span class="tname">Rate Limiting</span><span class="tuse">Throttle abusive or runaway clients per IP/token — protects both your infra and your bill.</span></div>
+        </div>
+        <div class="note"><b>Gap filled — Secrets Management:</b> HashiCorp Vault or AWS Secrets Manager. API keys and DB passwords in <code>.env</code> files or source control are how most breaches actually start.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ TIER 5 -->
+  <div class="tier-divider"><span class="label">Tier 05 <span class="n">— Asynchronous Systems</span></span><span class="line"></span></div>
+
+  <div class="phase" id="p10">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x0A</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">Messaging &amp; Event Streaming</div>
+          <div class="phase-priority"><span class="meter p5"><i></i><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">Decouples services so one slow or failing downstream system doesn't take the whole request chain down with it.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">Apache Kafka</span><span class="tuse">High-throughput event streaming with durable, replayable logs — the backbone of event-driven architectures at scale.</span></div>
+          <div class="tool"><span class="tname">RabbitMQ</span><span class="tuse">Traditional message broker with flexible routing (queues, exchanges) — great for task distribution and work queues.</span></div>
+          <div class="tool"><span class="tname">AWS SQS / SNS</span><span class="tuse">Fully managed queue (SQS) and pub/sub topic (SNS) — zero infrastructure to run yourself.</span></div>
+        </div>
+        <div class="note"><b>Gap filled — Event-Driven Patterns:</b> Event Sourcing, CQRS, and the Saga pattern for distributed transactions. Once you split a monolith into services, "how do these agree on state" becomes its own discipline.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase" id="p11">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x0B</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">Background Jobs &amp; Scheduling</div>
+          <div class="phase-priority"><span class="meter p4"><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">Anything that doesn't need to happen inside the request/response cycle shouldn't be blocking it.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">Celery</span><span class="tuse">Python's standard distributed task queue — pairs naturally with Django/FastAPI and Redis/RabbitMQ as the broker.</span></div>
+          <div class="tool"><span class="tname">BullMQ</span><span class="tuse">Redis-backed job queue for Node.js with retries, delays, and rate limiting built in.</span></div>
+          <div class="tool"><span class="tname">Sidekiq</span><span class="tuse">The Ruby ecosystem's background job standard — worth knowing conceptually even outside Ruby shops.</span></div>
+          <div class="tool"><span class="tname">Cron / Quartz Scheduler <span class="gapflag">Added</span></span><span class="tuse">For time-based jobs (nightly reports, cleanup tasks) rather than event-triggered ones — Quartz for Java, cron for everything else.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ TIER 6 -->
+  <div class="tier-divider"><span class="label">Tier 06 <span class="n">— Infrastructure &amp; Delivery</span></span><span class="line"></span></div>
+
+  <div class="phase" id="p12">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x0C</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">Containers</div>
+          <div class="phase-priority"><span class="meter p5"><i></i><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">"Works on my machine" stops being an excuse the moment your app ships in a container.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">Docker</span><span class="tuse">Package your app with its exact runtime environment — the unit every modern deployment pipeline is built around.</span></div>
+          <div class="tool"><span class="tname">Docker Compose</span><span class="tuse">Define and run multi-container setups (app + DB + Redis) locally with one command.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase" id="p13">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x0D</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">Orchestration</div>
+          <div class="phase-priority"><span class="meter p4"><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">Once you have more than a few containers, you need something deciding where they run and what happens when one dies.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">Kubernetes</span><span class="tuse">The industry standard for running, scaling, and self-healing containerized workloads across a cluster.</span></div>
+          <div class="tool"><span class="tname">Helm <span class="gapflag">Added</span></span><span class="tuse">Package manager for Kubernetes — templated, versioned manifests instead of hand-editing raw YAML per environment.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase" id="p14">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x0E</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">Cloud Platforms</div>
+          <div class="phase-priority"><span class="meter p5"><i></i><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">Where your architecture actually gets tested — quota limits, region outages, and IAM permission edge cases don't show up on localhost.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">EC2</span><span class="tuse">Raw virtual machines — full control, used when you're not ready to be fully serverless or managed.</span></div>
+          <div class="tool"><span class="tname">S3</span><span class="tuse">Object storage for files, backups, and static assets — effectively infinite, extremely cheap.</span></div>
+          <div class="tool"><span class="tname">RDS</span><span class="tuse">Managed relational databases — AWS handles patching, backups, and failover for you.</span></div>
+          <div class="tool"><span class="tname">IAM</span><span class="tuse">Fine-grained permissions for who/what can touch which AWS resource — the backbone of cloud security.</span></div>
+          <div class="tool"><span class="tname">VPC</span><span class="tuse">Your private network inside AWS — subnets, route tables, security groups that isolate your infra.</span></div>
+          <div class="tool"><span class="tname">Lambda</span><span class="tuse">Run code without managing servers — pay per invocation, ideal for event-driven, bursty workloads.</span></div>
+          <div class="tool"><span class="tname">EKS</span><span class="tuse">AWS's managed Kubernetes — removes the operational burden of running the control plane yourself.</span></div>
+        </div>
+        <div class="note"><b>Note:</b> GCP (Cloud Run, BigQuery) and Azure follow the same core concepts — learn AWS deeply, the others transfer fast.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase" id="p15">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x0F</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">CI/CD &amp; Deployment</div>
+          <div class="phase-priority"><span class="meter p5"><i></i><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">Automates the boring, error-prone part of shipping — so "deploy" means a git push, not a checklist.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">GitHub Actions</span><span class="tuse">Workflow automation tied directly to your repo — the fastest path to a working pipeline today.</span></div>
+          <div class="tool"><span class="tname">GitLab CI</span><span class="tuse">Deeply integrated pipelines if your org already lives in GitLab.</span></div>
+          <div class="tool"><span class="tname">Jenkins</span><span class="tuse">Older, self-hosted, endlessly pluggable — still common in larger, legacy enterprises.</span></div>
+        </div>
+        <div class="note"><b>Gap filled — Deployment Strategies:</b> Blue-Green, Canary, and Rolling deployments. The pipeline gets your code out; these decide how much of it goes live at once, and how fast you can roll back.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase" id="p16">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x10</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">Reverse Proxy &amp; API Gateway</div>
+          <div class="phase-priority"><span class="meter p4"><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">The traffic cop sitting in front of your services — routing, TLS termination, and increasingly, security policy.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">Nginx</span><span class="tuse">Reverse proxy, load balancer, and static file server — sits in front of almost every production stack.</span></div>
+          <div class="tool"><span class="tname">Traefik</span><span class="tuse">Cloud-native reverse proxy that auto-discovers services in Docker/Kubernetes — less manual config than Nginx.</span></div>
+          <div class="tool"><span class="tname">API Gateway <span class="gapflag">Added</span></span><span class="tuse">Kong or AWS API Gateway — centralizes auth, rate limiting, and routing across many microservices instead of duplicating it per service.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase" id="p17">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x11</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">CDN &amp; Edge Delivery <span class="gapflag">Added tier</span></div>
+          <div class="phase-priority"><span class="meter p3"><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">Not just for frontend static files — CDNs also cache API responses and absorb DDoS traffic before it ever reaches your servers.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">CloudFront</span><span class="tuse">AWS's CDN — edge-caches assets and can front your API for geographically distributed users.</span></div>
+          <div class="tool"><span class="tname">Cloudflare</span><span class="tuse">CDN plus DDoS protection and a Web Application Firewall (WAF) — a common first line of defense in front of any public API.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase" id="p18">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x12</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">Infrastructure as Code</div>
+          <div class="phase-priority"><span class="meter p4"><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">If your infrastructure only exists in the AWS console, it only exists in one person's head — IaC makes it reviewable and reproducible.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">Terraform</span><span class="tuse">Cloud-agnostic, declarative infrastructure provisioning — the current industry default.</span></div>
+          <div class="tool"><span class="tname">Ansible</span><span class="tuse">Agentless configuration management — great for provisioning software onto servers you already have.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ TIER 7 -->
+  <div class="tier-divider"><span class="label">Tier 07 <span class="n">— Observability &amp; Quality</span></span><span class="line"></span></div>
+
+  <div class="phase" id="p19">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x13</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">Monitoring</div>
+          <div class="phase-priority"><span class="meter p5"><i></i><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">You cannot fix what you cannot see — monitoring is what turns "the site feels slow" into an actual, fixable graph.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">Prometheus</span><span class="tuse">Pulls and stores time-series metrics from your services — the de facto standard in the Kubernetes world.</span></div>
+          <div class="tool"><span class="tname">Grafana</span><span class="tuse">Dashboards and alerting on top of Prometheus (or almost any data source) — turns raw metrics into something a human can act on.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase" id="p20">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x14</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">Logging</div>
+          <div class="phase-priority"><span class="meter p4"><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">Metrics tell you something is wrong; logs tell you why. Centralized logging is the difference between grepping 40 servers and one search bar.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">ELK / OpenSearch</span><span class="tuse">Elasticsearch + Logstash + Kibana — ingest, index, and visually search logs from every service in one place.</span></div>
+          <div class="tool"><span class="tname">Loki</span><span class="tuse">Grafana's log aggregator — much lighter-weight than ELK when you already run Prometheus/Grafana.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase" id="p21">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x15</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">Distributed Tracing</div>
+          <div class="phase-priority"><span class="meter p4"><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">Once one request touches five microservices, logs alone can't tell you which hop added the latency — tracing can.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">OpenTelemetry</span><span class="tuse">Vendor-neutral standard for instrumenting traces, metrics, and logs — instrument once, export anywhere.</span></div>
+          <div class="tool"><span class="tname">Jaeger</span><span class="tuse">Visualizes distributed traces as a timeline — pinpoints exactly which service call in a chain is slow.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase" id="p22">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x16</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">Testing</div>
+          <div class="phase-priority"><span class="meter p5"><i></i><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">The confidence layer — lets you ship changes fast without personally re-checking every endpoint by hand.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">Pytest</span><span class="tuse">Python's testing standard — fixtures, parametrization, and a plugin ecosystem for almost anything.</span></div>
+          <div class="tool"><span class="tname">JUnit + Mockito</span><span class="tuse">Java's testing pair — JUnit runs tests, Mockito mocks out dependencies so tests stay isolated.</span></div>
+          <div class="tool"><span class="tname">Jest</span><span class="tuse">The default test runner and assertion library across the Node/TypeScript ecosystem.</span></div>
+          <div class="tool"><span class="tname">Postman / Newman</span><span class="tuse">Manual and automated (CI-runnable) API testing without writing a full test harness.</span></div>
+        </div>
+        <div class="note"><b>Gap filled — Load &amp; Performance Testing:</b> k6, JMeter, or Locust. Correctness tests prove your API works; load tests prove it survives real traffic — you need both before calling something production-ready.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase" id="p23">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x17</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">API Documentation</div>
+          <div class="phase-priority"><span class="meter p4"><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">An API only consumers can't figure out how to use is an API that generates support tickets instead of integrations.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">OpenAPI / Swagger</span><span class="tuse">Machine-readable API spec that also renders interactive docs — most modern frameworks can generate this automatically.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase" id="p24">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x18</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">Search</div>
+          <div class="phase-priority"><span class="meter p3"><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">A database is not a search engine — reach for these the moment "search" becomes a real product feature, not just a filter.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">Elasticsearch / OpenSearch</span><span class="tuse">Full-text search at scale — fuzzy matching, relevance ranking, faceted filtering that SQL <code>LIKE</code> queries can't do well.</span></div>
+          <div class="tool"><span class="tname">Typesense</span><span class="tuse">Lighter, faster-to-set-up alternative for typo-tolerant instant search — great for smaller catalogs.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ TIER 8 -->
+  <div class="tier-divider"><span class="label">Tier 08 <span class="n">— Architecture &amp; Production</span></span><span class="line"></span></div>
+
+  <div class="phase" id="p25">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x19</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">System Design &amp; Architecture</div>
+          <div class="phase-priority"><span class="meter p5"><i></i><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">This is what actually separates a mid-level from a senior backend engineer — everything else in this map is a tool; this is judgment about how to combine them.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">Load Balancing</span><span class="tuse">Distribute traffic across instances so no single server becomes the bottleneck or single point of failure.</span></div>
+          <div class="tool"><span class="tname">Sharding</span><span class="tuse">Split a dataset across multiple databases when one instance can't hold or serve it all anymore.</span></div>
+          <div class="tool"><span class="tname">Replication</span><span class="tuse">Keep copies of your data across nodes for read scaling and failover.</span></div>
+          <div class="tool"><span class="tname">Queues</span><span class="tuse">Buffer load spikes and decouple producers from consumers — smooths out traffic bursts.</span></div>
+          <div class="tool"><span class="tname">Microservices</span><span class="tuse">Split a system along business boundaries for independent scaling and deployment — with real coordination costs to weigh against the benefits.</span></div>
+        </div>
+        <div class="note"><b>Gap filled — Design Patterns &amp; Principles:</b> SOLID, Clean/Hexagonal Architecture, and classic patterns (Factory, Strategy, Repository). This is what keeps a codebase maintainable once it's grown past what any one person can hold in their head.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase" id="p26">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x1A</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">Production Readiness <span class="gapflag">Added tier</span></div>
+          <div class="phase-priority"><span class="meter p4"><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">The unglamorous checklist that decides whether an outage is a five-minute blip or a three-hour incident review.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">Feature Flags</span><span class="tuse">LaunchDarkly or a self-rolled equivalent — ship code dark, then turn features on for real users without a redeploy.</span></div>
+          <div class="tool"><span class="tname">Health Checks &amp; Graceful Shutdown</span><span class="tuse">Let your orchestrator know when an instance is actually ready — and let in-flight requests finish before a pod dies.</span></div>
+          <div class="tool"><span class="tname">Backups &amp; Disaster Recovery</span><span class="tuse">Automated backups plus a tested restore process — a backup you've never restored from is a hope, not a plan.</span></div>
+          <div class="tool"><span class="tname">Chaos Engineering</span><span class="tuse">Deliberately break things in staging (or carefully in prod) to find weak points before your users do.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase" id="p27">
+    <div class="node">
+      <div class="addr-wrap"><span class="addr">0x1B</span></div>
+      <div class="card">
+        <div class="phase-head">
+          <div class="phase-title">Version Control &amp; Collaboration</div>
+          <div class="phase-priority"><span class="meter p5"><i></i><i></i><i></i><i></i><i></i></span></div>
+        </div>
+        <p class="phase-why">Listed again here deliberately — by the time you're touching every module above, disciplined Git hygiene (small PRs, clear commits, protected branches) is what keeps a team from stepping on each other.</p>
+        <div class="tools">
+          <div class="tool"><span class="tname">Git</span><span class="tuse">Distributed version control — the substrate every other tool on this page assumes you already have.</span></div>
+          <div class="tool"><span class="tname">GitHub / GitLab</span><span class="tuse">Code review, CI triggers, issue tracking, and project management layered on top of Git.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="foot-grid">
+    <div>
+      <h4>How to use this map</h4>
+      <p>Move top to bottom, tier by tier. Within a tier, go wide across the listed tools rather than deep on one — depth comes later, on the job, once you know the landscape.</p>
+    </div>
+    <div>
+      <h4>On priority ratings</h4>
+      <p>Critical and High items are expected baseline knowledge for a backend role at almost any company. Situational items are what separates specialists — pick them up when a real project demands them, not before.</p>
+    </div>
+  </div>
+  <div class="sig">/// backend_roadmap.sys — 28 nodes traced — compiled for zero-to-production backend engineering.</div>
+</footer>
+
+<script>
+  // Build the quick-jump rail from every .phase in document order
+  (function(){
+    var phases = Array.prototype.slice.call(document.querySelectorAll('.phase'));
+    var nav = document.getElementById('quicknav');
+    var links = [];
+    phases.forEach(function(p){
+      var addr = p.querySelector('.addr').textContent.trim();
+      var title = p.querySelector('.phase-title').childNodes[0].textContent.trim();
+      var a = document.createElement('a');
+      a.href = '#' + p.id;
+      var tip = document.createElement('span');
+      tip.className = 'tip';
+      tip.textContent = addr + ' ' + title;
+      a.appendChild(tip);
+      nav.appendChild(a);
+      links.push({id:p.id, el:a});
+    });
+
+    if ('IntersectionObserver' in window){
+      var map = {};
+      links.forEach(function(l){ map[l.id] = l.el; });
+      var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            links.forEach(function(l){ l.el.classList.remove('active'); });
+            map[entry.target.id].classList.add('active');
+          }
+        });
+      }, {rootMargin: '-40% 0px -55% 0px', threshold: 0});
+      phases.forEach(function(p){ obs.observe(p); });
+    }
+  })();
+</script>
+
+</body>
+</html>
